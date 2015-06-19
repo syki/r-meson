@@ -1,7 +1,7 @@
 Rrun : Rgenerate {
 
-	repopulate { |m|
-		this.fillWith { |i| (i < m).asInteger };
+	repopulate { |newSum|
+		this.fillWith { |i| (i < newSum).asInteger };
 	}
 	
 }

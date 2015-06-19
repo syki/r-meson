@@ -1,0 +1,25 @@
+CLASS:: Rrun
+
+	SUMMARY:: Generates runs of 1s followed by 0s.
+
+	CATEGORIES:: Collections
+
+	DESCRIPTION::
+
+		Generates sequences of the form:
+
+		CODE::
+[1, 1, ..., 1, 1, 0, 0, ..., 0, 0]
+		::
+
+CLASSMETHODS::
+
+	METHOD:: new
+
+		Returns a new rhythm sequence of the given size beginning with the given number of 1s.
+
+INSTANCEMETHODS::
+
+	METHOD:: repopulate
+		
+		Repopulates CODE::this:: as a run of 1s followed by 0s.

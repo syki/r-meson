@@ -3,39 +3,47 @@ R : List {
 	var < phase = 0;
 
 *	copyInstance { |instance|
-		var phi = instance.phase;
-		^ this.new.array_ (instance.array.rotate (phi)).phase_ (phi);
+		var currentPhase = instance.phase;
+
+		// Reapply the current phase (`rotate` and `phase_` work in opposite directions).
+
+		^ this.new.array_ (instance.array.rotate (currentPhase)).phase_ (currentPhase);
 	}
 
-	size_ { |n = 0|
-		var m = this.size;
-		super.size_ (n);
-		if (n > m) { for (m, n - 1, (super.put (_, 0))) };
+	size_ { |newSize = 0|
+		var oldSize = this.size;
+		super.size_ (newSize);
+
+		if (newSize > oldSize) { for (oldSize, newSize - 1, (super.put (_, 0))) };
 	}
 
-	phase_ { |k = 0|
-		this.unrotateInPlace (k - phase);
-		phase = k;
+	phase_ { |newPhase = 0|
+		this.derotateInPlace (newPhase - phase);
+		phase = newPhase;
 	}
 
-	rephase { |k = 0|
-		^ this.phase_ (k);
+	rephase { |newPhase = 0|
+		^ this.phase_ (newPhase);
 	}
 
-	rephased { |k = 0|
-		^ this.copy.rephase (k);
+	rephased { |newPhase = 0|
+		^ this.copy.rephase (newPhase);
 	}
 
-	dephase { |d = 0|
-		^ this.phase_ (phase + d);
+	dephase { |phaseDifference = 0|
+		^ this.phase_ (phase + phaseDifference);
 	}
 
-	dephased { |d = 0|
-		^ this.copy.dephase (d);
+	dephased { |phaseDifference = 0|
+		^ this.copy.dephase (phaseDifference);
 	}
 
 	asEvent {
 		^ (size: this.size, sum: this.sum, phase: this.phase);
+	}
+
+	asDurations {
+		^ this.add (1).indicesOf1.differentiate.drop (1);
 	}
 
 }

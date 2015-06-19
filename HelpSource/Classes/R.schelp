@@ -1,0 +1,32 @@
+CLASS:: R
+
+	SUMMARY:: Represents a rhythm as sequence of binary numbers.
+
+	CATEGORIES:: Collections
+
+	DESCRIPTION::
+
+		A rhythm is defined as a sequence of 1s and 0s,
+		and is partially characterised by its CODE::size:: and CODE::sum:: (the number of 1s).
+
+		CODE::R:: borrows most of its functionality from CODE::List:: (and what's
+		defined in TELETYPE::github.com/tosyx/plasma)::.
+
+		Most of the methods defined have mutable and immutable variants,
+		generally adopting the following naming scheme:
+
+		CODE::
+.phase_ // mutates and returns `this`
+.rephase // alias of above
+.rephased // returns a mutated copy of `this`
+		::
+
+EXAMPLES::
+
+	The CODE::r:: adverb included in TELETYPE::github.com/tosyx/plasma::
+	repeats either side of the operator to ensure alignment:
+
+	CODE::
+R[0, 1, 0, 1, 0] +.r R[1, 1, 0]
+// -> [1, 2, 0, 2, 1, 0, 2, 1, 1, 1, 1, 1, 1, 2, 0]
+	::

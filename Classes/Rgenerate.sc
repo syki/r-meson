@@ -4,47 +4,50 @@ Rgenerate : R {
 		^ super.new.resize (size).regenerate (sum);
 	}
 
-	size_ { |size|
-		super.size_ (size).regenerate (this.sum);
+	size_ { |newSize = 0|
+		super.size_ (newSize).regenerate;
 	}
 
-	sum_ { |sum|
-		^ this.regenerate (sum);
+	sum_ { |newSum = 0|
+		^ this.regenerate (newSum);
 	}
 
-	resum { |sum|
-		^ this.regenerate (sum);
+	resum { |newSum = 0|
+		^ this.regenerate (newSum);
 	}
 
-	resummed { |sum|
-		^ this.regenerated (sum);
+	resummed { |newSum = 0|
+		^ this.regenerated (newSum);
 	}
 
-	regenerate { |sum = 0|
-		var k = phase; phase = 0;
+	regenerate { |newSum = 0|
+		var oldPhase = phase;
+		phase = 0;
+
 		// Repopulating etc destroys the phase implicit in the array,
-		// so it needs to be reapplied...
-		^ this.repopulate (sum).redistribute (sum).rephase (k);
+		// so it needs to be reset and reapplied...
+
+		^ this.repopulate (newSum).redistribute (newSum).rephase (oldPhase);
 	}
 
-	regenerated { |sum = 0|
-		^ this.copy.regenerate (sum);
+	regenerated { |newSum = 0|
+		^ this.copy.regenerate (newSum);
 	}
 
-	repopulate { |sum = 0|
+	repopulate { |newSum = 0|
 		^ this.fill (0);
 	}
 
-	repopulated { |sum = 0|
-		^ this.copy.repopulate (sum);
+	repopulated { |newSum = 0|
+		^ this.copy.repopulate (newSum);
 	}
 
-	redistribute { |sum = 0|
+	redistribute { |newSum = 0|
 		^ this;
 	}
 
-	redistributed { |sum = 0|
-		^ this.copy.redistribute (sum);
+	redistributed { |newSum = 0|
+		^ this.copy.redistribute (newSum);
 	}
 
 }

@@ -1,0 +1,50 @@
+CLASS:: Reuclid
+
+	SUMMARY:: Euclidean rhythm generation (of binary sequences).
+
+	CATEGORIES:: Collections
+
+	DESCRIPTION::
+
+		Performs the Euclidean algorithm described in the following paper:
+
+		Toussaint, G.
+		emphasis::The Euclidean Algorithm Generates Traditional Musical Rhythms (2005)::.
+		Proceedings of BRIDGES: Mathematical Connections in Art, Music and Science. Alberta, Canada. p47-56.
+
+CLASSMETHODS::
+
+	METHOD:: new
+
+		Returns a new Euclidean rhythm sequence of the given size and with the given number of 1s.
+
+INSTANCEMETHODS::
+
+	METHOD:: redistribute
+		
+		Given an R of the following form:
+
+		CODE::
+R[1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+		::
+
+		Redistributes the 1s according to the algorithm
+		described in the paper referenced above.
+
+SECTION:: Implementation
+
+	Conveniently, CODE::clump:: already provides something analogous to
+	divide & remainder for arrays, e.g.:
+
+	CODE::
+((1 ! 5) ++ (0 ! 7)).clump (5).flip
+// -> [[1, 0, 0], [1, 0, 0], [1, 0], [1, 0], [1, 0]]
+	::
+
+	So we only need to iteratively apply CODE::clump:: along with CODE::flip::
+	(the non-wrapping CODE::flop::, defined in CODE::github.com/tosyx/plasma:::
+
+	CODE::
+((1 ! 5) ++ (0 ! 7)).clump (5).flip.clump (3).flip
+// -> [[[1, 0, 0], [1, 0]], [[1, 0, 0], [1, 0]], [[1, 0]]]
+	::
